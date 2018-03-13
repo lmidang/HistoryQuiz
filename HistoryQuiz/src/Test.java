@@ -16,6 +16,8 @@ public class Test {
 		
 		boolean continued = true;
 		ArrayList<Question> questions = new ArrayList<Question>();
+		ArrayList<String> player = new ArrayList<String>();
+		ArrayList<Integer> bestScores = new ArrayList<Integer>();
 		String[] highestScorers = new String[5];
 		int[] highestScores = new int[5];
 		
@@ -24,6 +26,22 @@ public class Test {
 		while (continued) {
 			System.out.print("Enter name here ");
 			String name = std.nextLine();
+			
+			// Checking if previous player
+			boolean newName = true;
+			int nameIndex = 0;
+			for (int i = 0; i < player.size(); i++) {
+				if (player.get(i).equals(name)) {
+					newName = false;
+					nameIndex = i;
+				}
+			}
+			if (newName) {
+				player.add(name);
+				bestScores.add(0);
+				nameIndex = player.size() - 1;
+			}
+			
 			int score = 0;
 			
 			questionBank.randomizer(questions);
@@ -41,6 +59,14 @@ public class Test {
 				num++;
 			}
 			System.out.println("Your Score is " + score);
+			
+			// Checks best score
+			if (score > bestScores.get(nameIndex)) {
+				bestScores.set(nameIndex, score);
+				System.out.println("Highest Score!");
+			} else if (score == bestScores.get(nameIndex)) {
+				System.out.println("Same best score!");
+			}
 			
 			// Checks highest score
 			for (int i = 0; i < 5; i++) {
